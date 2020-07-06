@@ -1,0 +1,19 @@
+[Unit]
+After=graphical.target systemd-logind.service
+After=cloud-init.target
+# This utmp thingy is a bit annoying. It's the last thing for me to see when booting.
+After=systemd-update-utmp-runlevel.service
+# systemd turns the status display. e.g. [ FAILED ] off once the user-sessions have been started. We make our service run before, s.t. we can see the failed on the console.
+# If we enable that, though, then it doesn't boot.
+#Before=systemd-user-sessions.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/check.sh
+StandardOutput=tty
+#TTYPath=
+
+[Install]
+WantedBy=default.target
+# WantedBy=multi-user.target
+# WantedBy=graphical.target

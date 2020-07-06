@@ -1,0 +1,15 @@
+[Unit]
+#Before=check.service
+After=remote-fs.target
+After=appendzeros.service
+
+[Service]
+Type=oneshot
+ExecStart=find /  -path /proc -prune -o -fstype ext4 -type f -uid 0 -exec evmctl ima_hash {} \;
+#StandardOutput=tty
+#TTYPath=
+
+[Install]
+WantedBy=default.target
+# WantedBy=multi-user.target
+# WantedBy=graphical.target

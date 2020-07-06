@@ -1,0 +1,8 @@
+[Service]
+Type=oneshot
+Environment="STRESS_MEMORY_SIZE=300"
+ExecStartPre=/usr/bin/free -m
+ExecStart=/usr/bin/flock --timeout 30 /tmp/ima-cache.lock   /usr/bin/time -v  /usr/bin/stress-ng --verbose  --bigheap 1 --bigheap-ops ${STRESS_MEMORY_SIZE} --bigheap-growth 1M --timeout 30s
+ExecStartPost=/usr/bin/free -m
+StandardOutput=tty
+

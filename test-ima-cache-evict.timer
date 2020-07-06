@@ -1,0 +1,7 @@
+[Timer]
+# The program sleeps a little itself.
+# 15 is too little of a value.
+OnBootSec=25
+
+[Install]
+WantedBy=timers.target

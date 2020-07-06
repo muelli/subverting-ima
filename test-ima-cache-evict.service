@@ -1,0 +1,19 @@
+[Unit]
+After=graphical.target systemd-logind.service
+#After=cloud-init.target
+#RequiresMountsFor=/usr/local
+
+[Service]
+Type=oneshot
+ExecStartPre=/sbin/shutdown -h 5
+ExecStart=/usr/local/bin/test-ima-cache-evict
+StandardOutput=tty
+#TTYPath=
+# Instead of PostExec, we might want to have a master file as per https://unix.stackexchange.com/a/401341/71928
+Environment="SHUTDOWN_TIMEOUT=0"
+ExecStartPost=/sbin/shutdown -h ${SHUTDOWN_TIMEOUT}
+
+#[Install]
+#WantedBy=default.target
+# WantedBy=multi-user.target
+# WantedBy=graphical.target

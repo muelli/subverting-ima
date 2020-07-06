@@ -1,0 +1,9 @@
+[Unit]
+Description=Shut the system down when the linked services have stopped
+StopWhenUnneeded=true
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/true
+ExecStop=/sbin/shutdown -h 1

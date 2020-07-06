@@ -1,0 +1,17 @@
+[Unit]
+Before=check.service
+Before=imafix.service
+After=remote-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/appendzeros.py  /usr/local/bin/check.sh  appendzeros.service
+ExecStartPost=systemctl disable appendzeros.service
+ExecStartPost=systemctl start imafix.service
+StandardOutput=tty
+#TTYPath=
+
+[Install]
+WantedBy=default.target
+# WantedBy=multi-user.target
+# WantedBy=graphical.target

@@ -1,0 +1,20 @@
+[Unit]
+Description=Reverse SSH tunnel
+Wants=systemd-machined.service
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=6000
+StartLimitBurst=100
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sudo -u ubuntu ssh -NT -o ExitOnForwardFailure=yes -v fbi
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=60
+
+
+[Install]
+WantedBy=multi-user.target
+
